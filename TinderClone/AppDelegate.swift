@@ -19,8 +19,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //Connect to Parse
         Parse.setApplicationId("IXcFpI577bBpo0SxQFAA16VGDY7KdkzDUXMeFBkS", clientKey: "T8RHEjrYnlXh4wMwNz5JUnBYvz20735dz2wnbOMT")
+        
         // Initialize facebook Parse plugin
         PFFacebookUtils.initializeFacebook()
+        
+        // Push notification setup
+        // - Step1. Create alert type notification
+        var pushSettings:UIUserNotificationSettings = UIUserNotificationSettings(forTypes: .Alert, categories: nil)
+        // - Step2. Registers your preferred options for notifying the user
+        application.registerUserNotificationSettings(pushSettings)
+        // - Step3. Register to receive push notifications via Apple Push Service.
+        application.registerForRemoteNotifications()
         
         return true
     }
@@ -50,6 +59,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(application: UIApplication) {
         FBAppCall.handleDidBecomeActiveWithSession(PFFacebookUtils.session())
     }
+    
+    // +-- Push Notification Related Functions --+
+    // +-----------------------------------------+
+    
+    // Tells the delegate that the app successfully registered with Apple Push Service (APS)
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        println("Success registered Push Notification")
+    }
 
+    // Sent to the delegate when Apple Push Service cannot successfully complete the registration process.
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        println("Failed to register Push Notification")
+    }
 }
 

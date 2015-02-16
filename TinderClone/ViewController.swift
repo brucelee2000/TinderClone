@@ -16,6 +16,13 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        // Send push notifcation via Parse
+        var push = PFPush()
+        push.setMessage("This is a test for push notification via Parse")
+        push.sendPushInBackgroundWithBlock { (isSuccessful:Bool, error:NSError!) -> Void in
+            println(isSuccessful)
+        }
+        
         // Set required permission when user login facebook
         var permissions = ["public_profile", "email"]
         

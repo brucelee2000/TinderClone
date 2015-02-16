@@ -68,7 +68,7 @@ class ViewController: UIViewController {
         var label = guesture.view!
         
         xFromCenter += translation.x
-        var scaleNumber = min(50 / abs(xFromCenter), 1)
+        var scaleNumber = min(70 / abs(xFromCenter), 1)
         
         // --- Animation for the draggging element ---
         // Set the new coordinate of the dragged element
@@ -88,7 +88,12 @@ class ViewController: UIViewController {
         // Apply scaling transform to the element
         label.transform = scaling
         
-        println("Draaaaaaagged!")
+        // Check if the dragged element is out of defined boundary
+        if label.center.x < 100 {
+            println("dragged into not chosen area")
+        } else if label.center.x > (self.view.bounds.width - 100) {
+            println("dragger into chosen area")
+        }
     }
 
 }

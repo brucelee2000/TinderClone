@@ -9,6 +9,8 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    var xFromCenter:CGFloat = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,12 +40,20 @@ class ViewController: UIViewController {
         
         self.view.addSubview(myLabel)
         
+        // --- Drag an element ---
         // Add guesture for dragging
         var gesture = UIPanGestureRecognizer(target: self, action: Selector("wasDragged:"))
         // Add guesture to customized element
         myLabel.addGestureRecognizer(gesture)
         // Enable user interaction for customized element
         myLabel.userInteractionEnabled = true
+        
+        // --- Rotate an element ---
+        // Create an affine transformation matrix constructed from a rotation (radians) value you provide.
+        var rotation:CGAffineTransform = CGAffineTransformMakeRotation(0)
+        // Apply rotation transform to the element
+        myLabel.transform = rotation
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -56,10 +66,28 @@ class ViewController: UIViewController {
         let translation = guesture.translationInView(self.view)
         // Obtain the element inside the dragging item
         var label = guesture.view!
+        
+        xFromCenter += translation.x
+        var scaleNumber = min(50 / abs(xFromCenter), 1)
+        
+        // --- Animation for the draggging element ---
         // Set the new coordinate of the dragged element
         label.center = CGPoint(x: label.center.x + translation.x, y: label.center.y + translation.y)
         // Reset translation for next movement
         guesture.setTranslation(CGPointZero, inView: self.view)
+        
+        // --- Animation for the rotating element ---
+        // Create an affine transformation matrix constructed from a rotation (radians) value you provide.
+        var rotation:CGAffineTransform = CGAffineTransformMakeRotation(xFromCenter / (self.view.bounds.width / 2))
+        // Apply rotation transform to the element
+        label.transform = rotation
+        
+        // --- Animation for scaling an element ---
+        // Create an affine transformation matrix constructed by scaling an existing affine transform.
+        var scaling:CGAffineTransform = CGAffineTransformScale(rotation, scaleNumber, scaleNumber)
+        // Apply scaling transform to the element
+        label.transform = scaling
+        
         println("Draaaaaaagged!")
     }
 

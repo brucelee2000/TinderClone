@@ -78,6 +78,7 @@ class ViewController: UIViewController {
         
         // --- Animation for the rotating element ---
         // Create an affine transformation matrix constructed from a rotation (radians) value you provide.
+        // - similarly, CGAffineTransformRotate(t: CGAffineTransform, angle: CGFloat)
         var rotation:CGAffineTransform = CGAffineTransformMakeRotation(xFromCenter / (self.view.bounds.width / 2))
         // Apply rotation transform to the element
         label.transform = rotation
@@ -93,6 +94,20 @@ class ViewController: UIViewController {
             println("dragged into not chosen area")
         } else if label.center.x > (self.view.bounds.width - 100) {
             println("dragger into chosen area")
+        }
+        
+        // Check the guesture status
+        if guesture.state == UIGestureRecognizerState.Ended {
+            // Reset position
+            label.center.x = self.view.bounds.width / 2
+            label.center.y = self.view.bounds.width / 2
+            // Reset rotation
+            rotation = CGAffineTransformMakeRotation(0)
+            // Reset scaling
+            scaleNumber = max(abs(xFromCenter)/100, 1)
+            // Apply rotate and scaling reset
+            scaling = CGAffineTransformScale(rotation, scaleNumber, scaleNumber)
+            label.transform = scaling
         }
     }
 

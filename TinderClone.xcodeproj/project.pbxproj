@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A7388C741A92B75D00B5FB16 /* facebookLogin.png in Resources */ = {isa = PBXBuildFile; fileRef = A7388C731A92B75D00B5FB16 /* facebookLogin.png */; };
+		A7388C761A92C78700B5FB16 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7388C751A92C78700B5FB16 /* SignUpViewController.swift */; };
 		A73908F31A8DBFBA00DB0EB1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73908F21A8DBFBA00DB0EB1 /* AppDelegate.swift */; };
 		A73908F51A8DBFBA00DB0EB1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73908F41A8DBFBA00DB0EB1 /* ViewController.swift */; };
 		A73908F81A8DBFBA00DB0EB1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A73908F61A8DBFBA00DB0EB1 /* Main.storyboard */; };
@@ -41,6 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A7388C731A92B75D00B5FB16 /* facebookLogin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebookLogin.png; sourceTree = "<group>"; };
+		A7388C751A92C78700B5FB16 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		A73908ED1A8DBFBA00DB0EB1 /* TinderClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinderClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A73908F11A8DBFBA00DB0EB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A73908F21A8DBFBA00DB0EB1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -141,7 +145,9 @@
 				A739091C1A8DC44200DB0EB1 /* ParseFacebookUtils.framework */,
 				A73908F21A8DBFBA00DB0EB1 /* AppDelegate.swift */,
 				A73908F41A8DBFBA00DB0EB1 /* ViewController.swift */,
+				A7388C751A92C78700B5FB16 /* SignUpViewController.swift */,
 				A73908F61A8DBFBA00DB0EB1 /* Main.storyboard */,
+				A7388C731A92B75D00B5FB16 /* facebookLogin.png */,
 				A73908F91A8DBFBA00DB0EB1 /* Images.xcassets */,
 				A73908FB1A8DBFBA00DB0EB1 /* LaunchScreen.xib */,
 				A73908F01A8DBFBA00DB0EB1 /* Supporting Files */,
@@ -257,6 +263,7 @@
 				A73908F81A8DBFBA00DB0EB1 /* Main.storyboard in Resources */,
 				A73908FD1A8DBFBA00DB0EB1 /* LaunchScreen.xib in Resources */,
 				A73908FA1A8DBFBA00DB0EB1 /* Images.xcassets in Resources */,
+				A7388C741A92B75D00B5FB16 /* facebookLogin.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,6 +281,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A7388C761A92C78700B5FB16 /* SignUpViewController.swift in Sources */,
 				A73908F51A8DBFBA00DB0EB1 /* ViewController.swift in Sources */,
 				A73908F31A8DBFBA00DB0EB1 /* AppDelegate.swift in Sources */,
 			);
@@ -480,6 +488,7 @@
 				A739090E1A8DBFBA00DB0EB1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A739090F1A8DBFBA00DB0EB1 /* Build configuration list for PBXNativeTarget "TinderCloneTests" */ = {
 			isa = XCConfigurationList;
@@ -488,6 +497,7 @@
 				A73909111A8DBFBA00DB0EB1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

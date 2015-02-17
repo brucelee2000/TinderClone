@@ -10,18 +10,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var xFromCenter:CGFloat = 0
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
-        // Send push notifcation via Parse
-        var push = PFPush()
-        push.setMessage("This is a test for push notification via Parse")
-        push.sendPushInBackgroundWithBlock { (isSuccessful:Bool, error:NSError!) -> Void in
-            println(isSuccessful)
-        }
+    @IBAction func facebookSignInButtonPressed(sender: UIButton) {
+        self.loginCancelledLabel.hidden = true
         
         // Set required permission when user login facebook
         var permissions = ["public_profile", "email"]
@@ -30,12 +20,32 @@ class ViewController: UIViewController {
         PFFacebookUtils.logInWithPermissions(permissions, {(user: PFUser!, error: NSError!) -> Void in
             if user == nil {
                 println("Uh oh. The user cancelled the Facebook login.")
+                self.loginCancelledLabel.hidden = false
             } else if user.isNew {
                 println("User signed up and logged in through Facebook!")
+                self.performSegueWithIdentifier("signUp", sender: self)
             } else {
                 println("User logged in through Facebook!")
+                self.performSegueWithIdentifier("signUp", sender: self)
             }
         })
+        
+    }
+    
+    @IBOutlet weak var loginCancelledLabel: UILabel!
+    
+    var xFromCenter:CGFloat = 0
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+
+        // Send push notifcation via Parse
+        var push = PFPush()
+        push.setMessage("This is a test for push notification via Parse")
+        push.sendPushInBackgroundWithBlock { (isSuccessful:Bool, error:NSError!) -> Void in
+            println(isSuccessful)
+        }
         
         // Add customized element manully
         let screenCenterX = self.view.bounds.width / 2
@@ -60,7 +70,7 @@ class ViewController: UIViewController {
         var rotation:CGAffineTransform = CGAffineTransformMakeRotation(0)
         // Apply rotation transform to the element
         myLabel.transform = rotation
-        
+               
     }
 
     override func didReceiveMemoryWarning() {
@@ -115,6 +125,13 @@ class ViewController: UIViewController {
             // Apply rotate and scaling reset
             scaling = CGAffineTransformScale(rotation, scaleNumber, scaleNumber)
             label.transform = scaling
+        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        if PFUser.currentUser() != nil {
+            println("User loggined in")
+            self.performSegueWithIdentifier("signUp", sender: self)
         }
     }
 

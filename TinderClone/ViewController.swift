@@ -117,11 +117,13 @@ class ViewController: UIViewController {
         if guesture.state == UIGestureRecognizerState.Ended {
             // Reset position
             label.center.x = self.view.bounds.width / 2
-            label.center.y = self.view.bounds.width / 2
+            label.center.y = self.view.bounds.height / 2
             // Reset rotation
             rotation = CGAffineTransformMakeRotation(0)
             // Reset scaling
             scaleNumber = max(abs(xFromCenter)/100, 1)
+            scaleNumber = 1
+            xFromCenter = 0
             // Apply rotate and scaling reset
             scaling = CGAffineTransformScale(rotation, scaleNumber, scaleNumber)
             label.transform = scaling

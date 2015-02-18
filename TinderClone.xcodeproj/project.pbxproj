@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A73829481A945E690036320D /* femalePlaceHolder.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = A73829471A945E690036320D /* femalePlaceHolder.jpeg */; };
 		A7388C741A92B75D00B5FB16 /* facebookLogin.png in Resources */ = {isa = PBXBuildFile; fileRef = A7388C731A92B75D00B5FB16 /* facebookLogin.png */; };
 		A7388C761A92C78700B5FB16 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7388C751A92C78700B5FB16 /* SignUpViewController.swift */; };
 		A7388C781A9318D300B5FB16 /* TinderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7388C771A9318D300B5FB16 /* TinderViewController.swift */; };
@@ -44,6 +45,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A73829471A945E690036320D /* femalePlaceHolder.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = femalePlaceHolder.jpeg; sourceTree = "<group>"; };
 		A7388C731A92B75D00B5FB16 /* facebookLogin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebookLogin.png; sourceTree = "<group>"; };
 		A7388C751A92C78700B5FB16 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		A7388C771A9318D300B5FB16 /* TinderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TinderViewController.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 				A7388C771A9318D300B5FB16 /* TinderViewController.swift */,
 				A73908F61A8DBFBA00DB0EB1 /* Main.storyboard */,
 				A7388C731A92B75D00B5FB16 /* facebookLogin.png */,
+				A73829471A945E690036320D /* femalePlaceHolder.jpeg */,
 				A73908F91A8DBFBA00DB0EB1 /* Images.xcassets */,
 				A73908FB1A8DBFBA00DB0EB1 /* LaunchScreen.xib */,
 				A73908F01A8DBFBA00DB0EB1 /* Supporting Files */,
@@ -266,6 +269,7 @@
 				A73908F81A8DBFBA00DB0EB1 /* Main.storyboard in Resources */,
 				A73908FD1A8DBFBA00DB0EB1 /* LaunchScreen.xib in Resources */,
 				A73908FA1A8DBFBA00DB0EB1 /* Images.xcassets in Resources */,
+				A73829481A945E690036320D /* femalePlaceHolder.jpeg in Resources */,
 				A7388C741A92B75D00B5FB16 /* facebookLogin.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -49,5 +49,9 @@
 			</array>
 		</dict>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Tinder needs to know where you are</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Tinder always needs to know where you are</string>
 </dict>
 </plist>

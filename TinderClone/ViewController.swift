@@ -47,6 +47,8 @@ class ViewController: UIViewController {
             println(isSuccessful)
         }
         
+        /*
+
         // Add customized element manully
         let screenCenterX = self.view.bounds.width / 2
         let screenCenterY = self.view.bounds.height / 2
@@ -70,6 +72,8 @@ class ViewController: UIViewController {
         var rotation:CGAffineTransform = CGAffineTransformMakeRotation(0)
         // Apply rotation transform to the element
         myLabel.transform = rotation
+
+        */
                
     }
 

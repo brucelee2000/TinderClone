@@ -26,13 +26,13 @@ class TinderViewController: UIViewController {
     
     var userNamesList:[String] = []
     var userImagesList:[NSData] = []
-    var currentUser = 0
+    var currentShownUser = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        var user = PFUser.currentUser()
+        var currentUser = PFUser.currentUser()
         
         // Update user location with Parse
         PFGeoPoint.geoPointForCurrentLocationInBackground { (myGeopoint:PFGeoPoint!, error:NSError!) -> Void in
@@ -40,24 +40,68 @@ class TinderViewController: UIViewController {
                 println(error)
             } else {
                 println(myGeopoint)
-                user["location"] = myGeopoint
+                currentUser["location"] = myGeopoint
                 
                 // Create a query for places
                 var query = PFUser.query()
                 // Interested in locations near user
                 query.whereKey("location", nearGeoPoint: myGeopoint)
+                
+                // +--- Multiple query seems to have bugs in Parse ---+
+                // +--------------------------------------------------+
+                // Condition1. Select the corrsponding interest
+                //query.whereKey("gender", equalTo: user["interest"])
+                // Condition2. Exclude current user
+                //query.whereKey("username", notEqualTo: PFUser.currentUser().username)
+
                 // Limit what could be lots of points
                 query.limit = 10
                 // Final list of objects
                 query.findObjectsInBackgroundWithBlock({ (usersFound:[AnyObject]!, error:NSError!) -> Void in
                     for user in usersFound {
                         println(user.username)
-                        self.userNamesList.append(user.username)
-                        self.userImagesList.append(user["image"] as NSData)
+                        
+                        // Set criteria here instead of buggy Parse query condition
+                        let userGender = user["gender"] as String
+                        let currentUserInterest = currentUser["interest"] as String
+                        
+                        if userGender == currentUserInterest && currentUser.username != user.username {
+                            self.userNamesList.append(user.username)
+                            self.userImagesList.append(user["image"] as NSData)
+                        }
+                        
+
                     }
+                    
+                    
+                    // Add customized element manully
+                    let screenCenterX = self.view.bounds.width / 2
+                    let screenCenterY = self.view.bounds.height / 2
+                    
+                    var userImageView:UIImageView = UIImageView(frame: CGRectMake(0, 0, self.view.frame.width, self.view.frame.height))
+                    userImageView.image = UIImage(data: self.userImagesList[0])
+                    userImageView.contentMode = UIViewContentMode.ScaleAspectFit
+                    
+                    self.view.addSubview(userImageView)
+                    
+                    // --- Drag an element ---
+                    // Add guesture for dragging
+                    var gesture = UIPanGestureRecognizer(target: self, action: Selector("wasDragged:"))
+                    // Add guesture to customized element
+                    userImageView.addGestureRecognizer(gesture)
+                    // Enable user interaction for customized element
+                    userImageView.userInteractionEnabled = true
+                    
+                    // --- Rotate an element ---
+                    // Create an affine transformation matrix constructed from a rotation (radians) value you provide.
+                    var rotation:CGAffineTransform = CGAffineTransformMakeRotation(0)
+                    // Apply rotation transform to the element
+                    userImageView.transform = rotation
+                    
+                    
                 })
                 
-                user.saveInBackgroundWithBlock(nil)         // user.save() takes too much time in realtime
+                currentUser.saveInBackgroundWithBlock(nil)         // user.save() takes too much time in realtime
             }
         }
         
@@ -68,29 +112,7 @@ class TinderViewController: UIViewController {
         }
         */
         
-        // Add customized element manully
-        let screenCenterX = self.view.bounds.width / 2
-        let screenCenterY = self.view.bounds.height / 2
-        
-        var userImageView:UIImageView = UIImageView(frame: CGRectMake(0, 0, self.view.frame.width, self.view.frame.height))
-        userImageView.image = UIImage(named: "femalePlaceHolder.jpeg")
-        userImageView.contentMode = UIViewContentMode.ScaleAspectFit
-        
-        self.view.addSubview(userImageView)
-        
-        // --- Drag an element ---
-        // Add guesture for dragging
-        var gesture = UIPanGestureRecognizer(target: self, action: Selector("wasDragged:"))
-        // Add guesture to customized element
-        userImageView.addGestureRecognizer(gesture)
-        // Enable user interaction for customized element
-        userImageView.userInteractionEnabled = true
-        
-        // --- Rotate an element ---
-        // Create an affine transformation matrix constructed from a rotation (radians) value you provide.
-        var rotation:CGAffineTransform = CGAffineTransformMakeRotation(0)
-        // Apply rotation transform to the element
-        userImageView.transform = rotation
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -179,13 +201,19 @@ class TinderViewController: UIViewController {
         // Check the guesture status
         if guesture.state == UIGestureRecognizerState.Ended {
             xFromCenter = 0
+            currentShownUser++
             
             // Remove the old ImageView
             label.removeFromSuperview()
             
             // Add the new ImageView
             var userImageView:UIImageView = UIImageView(frame: CGRectMake(0, 0, self.view.frame.width, self.view.frame.height))
-            userImageView.image = UIImage(named: "femalePlaceHolder.jpeg")
+            if currentShownUser >= userImagesList.count {
+                userImageView.image = UIImage(named: "femalePlaceHolder.jpeg")
+            } else {
+                userImageView.image = UIImage(data: self.userImagesList[currentShownUser])
+            }
+
             userImageView.contentMode = UIViewContentMode.ScaleAspectFit
             
             self.view.addSubview(userImageView)

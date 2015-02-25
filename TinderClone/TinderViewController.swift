@@ -58,47 +58,75 @@ class TinderViewController: UIViewController {
                 query.limit = 10
                 // Final list of objects
                 query.findObjectsInBackgroundWithBlock({ (usersFound:[AnyObject]!, error:NSError!) -> Void in
-                    for user in usersFound {
-                        println(user.username)
+                    if error != nil {
+                        println(error)
+                    } else {
                         
-                        // Set criteria here instead of buggy Parse query condition
-                        let userGender = user["gender"] as String
-                        let currentUserInterest = currentUser["interest"] as String
-                        
-                        if userGender == currentUserInterest && currentUser.username != user.username {
-                            self.userNamesList.append(user.username)
-                            self.userImagesList.append(user["image"] as NSData)
+                        var acceptedUsers:[String] = []
+                        var rejectedUsers:[String] = []
+                       
+                        if let accepted = currentUser["accepted"] as? [String] {
+                            acceptedUsers = accepted
                         }
                         
+                        if let rejected = currentUser["rejected"] as? [String] {
+                            rejectedUsers = rejected
+                        }
 
+                        println(acceptedUsers)
+                        println(rejectedUsers)
+                        
+                        for user in usersFound {
+                            println(user.username)
+                            
+                            // Set criteria here instead of buggy Parse query condition
+                            let userGender = user["gender"] as String
+                            let currentUserInterest = currentUser["interest"] as String
+                            
+                            // Exclude the users already in rejected list and accepted list
+                            if userGender == currentUserInterest && currentUser.username != user.username && !contains(acceptedUsers, user.username) && !contains(rejectedUsers, user.username){
+                                println("Showing..\(user.username)")
+                                self.userNamesList.append(user.username)
+                                self.userImagesList.append(user["image"] as NSData)
+                            }
+                            
+
+                        }
+                        
+                        // Check if found user list is empty
+                        if self.userNamesList.isEmpty {
+                            println("ERROR")
+                            self.showAlertWithText(header: "Sorry", message: "No girls for you atm")
+                            // TO do: quit to other VC
+                        } else {
+                        
+                            // Add customized element manully
+                            let screenCenterX = self.view.bounds.width / 2
+                            let screenCenterY = self.view.bounds.height / 2
+                            
+                            var userImageView:UIImageView = UIImageView(frame: CGRectMake(0, 0, self.view.frame.width, self.view.frame.height))
+                            userImageView.image = UIImage(data: self.userImagesList[0])
+                            userImageView.contentMode = UIViewContentMode.ScaleAspectFit
+                            
+                            self.view.addSubview(userImageView)
+                            
+                            // --- Drag an element ---
+                            // Add guesture for dragging
+                            var gesture = UIPanGestureRecognizer(target: self, action: Selector("wasDragged:"))
+                            // Add guesture to customized element
+                            userImageView.addGestureRecognizer(gesture)
+                            // Enable user interaction for customized element
+                            userImageView.userInteractionEnabled = true
+                            
+                            // --- Rotate an element ---
+                            // Create an affine transformation matrix constructed from a rotation (radians) value you provide.
+                            var rotation:CGAffineTransform = CGAffineTransformMakeRotation(0)
+                            // Apply rotation transform to the element
+                            userImageView.transform = rotation
+                        
+                        }
+                        
                     }
-                    
-                    
-                    // Add customized element manully
-                    let screenCenterX = self.view.bounds.width / 2
-                    let screenCenterY = self.view.bounds.height / 2
-                    
-                    var userImageView:UIImageView = UIImageView(frame: CGRectMake(0, 0, self.view.frame.width, self.view.frame.height))
-                    userImageView.image = UIImage(data: self.userImagesList[0])
-                    userImageView.contentMode = UIViewContentMode.ScaleAspectFit
-                    
-                    self.view.addSubview(userImageView)
-                    
-                    // --- Drag an element ---
-                    // Add guesture for dragging
-                    var gesture = UIPanGestureRecognizer(target: self, action: Selector("wasDragged:"))
-                    // Add guesture to customized element
-                    userImageView.addGestureRecognizer(gesture)
-                    // Enable user interaction for customized element
-                    userImageView.userInteractionEnabled = true
-                    
-                    // --- Rotate an element ---
-                    // Create an affine transformation matrix constructed from a rotation (radians) value you provide.
-                    var rotation:CGAffineTransform = CGAffineTransformMakeRotation(0)
-                    // Apply rotation transform to the element
-                    userImageView.transform = rotation
-                    
-                    
                 })
                 
                 currentUser.saveInBackgroundWithBlock(nil)         // user.save() takes too much time in realtime
@@ -191,15 +219,27 @@ class TinderViewController: UIViewController {
         // Apply scaling transform to the element
         label.transform = scaling
         
-        // Check if the dragged element is out of defined boundary
-        if label.center.x < 100 {
-            println("dragged into not chosen area")
-        } else if label.center.x > (self.view.bounds.width - 100) {
-            println("dragger into chosen area")
-        }
-        
         // Check the guesture status
         if guesture.state == UIGestureRecognizerState.Ended {
+            
+            // Check if the dragged element is out of defined boundary
+            if label.center.x < 100 {
+                println("Not chosen")
+                
+                // Add user to Parse Array
+                // - without duping element by "addUniqueObject"
+                PFUser.currentUser().addUniqueObject(self.userNamesList[self.currentShownUser], forKey: "rejected")
+                PFUser.currentUser().saveInBackgroundWithBlock(nil)
+                
+            } else if label.center.x > (self.view.bounds.width - 100) {
+                println("Chosen")
+                
+                // Add user to Parse Array 
+                // - without duping element by "addUniqueObject"
+                PFUser.currentUser().addUniqueObject(self.userNamesList[self.currentShownUser], forKey: "accepted")
+                PFUser.currentUser().saveInBackgroundWithBlock(nil)
+            }
+            
             xFromCenter = 0
             currentShownUser++
             
@@ -233,6 +273,15 @@ class TinderViewController: UIViewController {
             userImageView.transform = rotation
 
         }
+    }
+    
+    func showAlertWithText(header:String = "Warning", message:String) {
+        var alert = UIAlertController(title: header, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        var action = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (action:UIAlertAction!) -> Void in
+            // To do
+        }
+        alert.addAction(action)
+        self.presentViewController(alert, animated: true, completion:nil)
     }
 
 }

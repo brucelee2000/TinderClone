@@ -70,6 +70,7 @@ class ContactsTableViewController: UITableViewController {
         // Configure the cell...
         cell.textLabel?.text = namesforContacts[indexPath.row]
         cell.imageView?.image = UIImage(data: imagesforContacts[indexPath.row])
+        cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
 
         return cell
     }
@@ -110,16 +111,25 @@ class ContactsTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using [segue destinationViewController].
         // Pass the selected object to the new view controller.
+        
+        if segue.identifier == "sendMail" {
+            let mailVC = segue.destinationViewController as MailViewController
+            let indexPath = self.tableView.indexPathForSelectedRow()
+            mailVC.name = namesforContacts[indexPath!.row]
+            mailVC.email = emailsforContacts[indexPath!.row]
+        }
+        
     }
-    */
+
     
+    /*
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         // Compose Email subject and address
         var subject = "?subject=beautiful!"
@@ -128,5 +138,6 @@ class ContactsTableViewController: UITableViewController {
         // Call default email client to email
         UIApplication.sharedApplication().openURL(url!)
     }
+    */
 
 }

@@ -33,6 +33,7 @@
 		A73909331A8DC51400DB0EB1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A73909321A8DC51400DB0EB1 /* SystemConfiguration.framework */; };
 		A739093B1A8DCF3E00DB0EB1 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A739093A1A8DCF3E00DB0EB1 /* libsqlite3.dylib */; };
 		A7470E391A9DA59D002B4829 /* ContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7470E381A9DA59D002B4829 /* ContactsTableViewController.swift */; };
+		A75B842D1AA2E66B00B19C8B /* MailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75B842C1AA2E66B00B19C8B /* MailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,7 @@
 		A73909391A8DCD1D00DB0EB1 /* TinderClone-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TinderClone-Bridging-Header.h"; sourceTree = "<group>"; };
 		A739093A1A8DCF3E00DB0EB1 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		A7470E381A9DA59D002B4829 /* ContactsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsTableViewController.swift; sourceTree = "<group>"; };
+		A75B842C1AA2E66B00B19C8B /* MailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +156,7 @@
 				A7388C751A92C78700B5FB16 /* SignUpViewController.swift */,
 				A7388C771A9318D300B5FB16 /* TinderViewController.swift */,
 				A7470E381A9DA59D002B4829 /* ContactsTableViewController.swift */,
+				A75B842C1AA2E66B00B19C8B /* MailViewController.swift */,
 				A73908F61A8DBFBA00DB0EB1 /* Main.storyboard */,
 				A7388C731A92B75D00B5FB16 /* facebookLogin.png */,
 				A73829471A945E690036320D /* femalePlaceHolder.jpeg */,
@@ -296,6 +299,7 @@
 				A7470E391A9DA59D002B4829 /* ContactsTableViewController.swift in Sources */,
 				A7388C781A9318D300B5FB16 /* TinderViewController.swift in Sources */,
 				A73908F31A8DBFBA00DB0EB1 /* AppDelegate.swift in Sources */,
+				A75B842D1AA2E66B00B19C8B /* MailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

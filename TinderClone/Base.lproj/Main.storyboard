@@ -200,7 +200,7 @@
             </objects>
             <point key="canvasLocation" x="2602" y="275"/>
         </scene>
-        <!--Contacts Table View Controller-->
+        <!--Mutual Interest-->
         <scene sceneID="DVL-Ub-ziS">
             <objects>
                 <tableViewController id="Ulb-Yh-qFs" customClass="ContactsTableViewController" customModule="TinderClone" customModuleProvider="target" sceneMemberID="viewController">
@@ -214,6 +214,9 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="L93-ub-PRj" id="xl9-yc-aS9">
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="Lvj-OU-Cwu" kind="presentation" identifier="sendMail" id="O6D-8V-cOi"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -221,10 +224,107 @@
                             <outlet property="delegate" destination="Ulb-Yh-qFs" id="jQ3-lg-3Mp"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Mutual Interest" id="328-Ab-CGl"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YWQ-UG-1ek" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3271" y="275"/>
+        </scene>
+        <!--Mail View Controller-->
+        <scene sceneID="eB4-tJ-scq">
+            <objects>
+                <viewController id="Lvj-OU-Cwu" customClass="MailViewController" customModule="TinderClone" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Xp1-Uh-Smj"/>
+                        <viewControllerLayoutGuide type="bottom" id="oJM-OH-8mr"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9CT-bT-cTv">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jsq-lf-PKx">
+                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
+                                <items>
+                                    <navigationItem title="Title" id="6VB-Xh-j88">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="BH2-QC-hMk">
+                                            <connections>
+                                                <action selector="cancellButtonPressed:" destination="Lvj-OU-Cwu" id="wci-2v-JAF"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Send" id="Zf3-5x-GDI">
+                                            <connections>
+                                                <action selector="sendEmailButtonPressed:" destination="Lvj-OU-Cwu" id="VnN-Zt-qmL"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iQG-5O-V6c">
+                                <rect key="frame" x="16" y="89" width="42" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="42" id="p6f-Xy-WVB"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subject:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AUb-bX-woB">
+                                <rect key="frame" x="16" y="127" width="64" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LoL-V2-NdL">
+                                <rect key="frame" x="88" y="123" width="496" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KVf-Ht-PQI">
+                                <rect key="frame" x="50" y="89" width="192" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="192" id="JBA-Zk-M24"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Please leave your message here." textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="yC7-ax-BSK">
+                                <rect key="frame" x="11" y="167" width="573" height="413"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="yC7-ax-BSK" firstAttribute="trailing" secondItem="LoL-V2-NdL" secondAttribute="trailing" id="46o-Ku-xuo"/>
+                            <constraint firstItem="iQG-5O-V6c" firstAttribute="leading" secondItem="9CT-bT-cTv" secondAttribute="leadingMargin" id="7Ip-9w-fhj"/>
+                            <constraint firstItem="iQG-5O-V6c" firstAttribute="leading" secondItem="AUb-bX-woB" secondAttribute="leading" id="A5g-ye-qf7"/>
+                            <constraint firstItem="LoL-V2-NdL" firstAttribute="trailing" secondItem="9CT-bT-cTv" secondAttribute="trailingMargin" id="D8o-fL-Qdm"/>
+                            <constraint firstAttribute="trailing" secondItem="jsq-lf-PKx" secondAttribute="trailing" id="DW3-ly-far"/>
+                            <constraint firstItem="jsq-lf-PKx" firstAttribute="top" secondItem="Xp1-Uh-Smj" secondAttribute="bottom" id="EHz-s4-BNU"/>
+                            <constraint firstItem="KVf-Ht-PQI" firstAttribute="baseline" secondItem="iQG-5O-V6c" secondAttribute="baseline" id="P4J-3H-Gu1"/>
+                            <constraint firstItem="LoL-V2-NdL" firstAttribute="leading" secondItem="AUb-bX-woB" secondAttribute="trailing" constant="8" symbolic="YES" id="Prc-Mp-7nT"/>
+                            <constraint firstItem="jsq-lf-PKx" firstAttribute="leading" secondItem="9CT-bT-cTv" secondAttribute="leading" id="SZh-3A-kui"/>
+                            <constraint firstItem="KVf-Ht-PQI" firstAttribute="leading" secondItem="9CT-bT-cTv" secondAttribute="leadingMargin" constant="34" id="b5N-bA-1Wl"/>
+                            <constraint firstItem="iQG-5O-V6c" firstAttribute="top" secondItem="jsq-lf-PKx" secondAttribute="bottom" constant="25" id="bTv-Zt-6pz"/>
+                            <constraint firstAttribute="bottom" secondItem="yC7-ax-BSK" secondAttribute="bottom" constant="20" symbolic="YES" id="chq-ML-SbY"/>
+                            <constraint firstItem="yC7-ax-BSK" firstAttribute="top" secondItem="LoL-V2-NdL" secondAttribute="bottom" constant="14" id="f4U-HC-bvL"/>
+                            <constraint firstItem="yC7-ax-BSK" firstAttribute="leading" secondItem="9CT-bT-cTv" secondAttribute="leadingMargin" constant="-5" id="jJ9-j7-Mr0"/>
+                            <constraint firstItem="LoL-V2-NdL" firstAttribute="top" secondItem="KVf-Ht-PQI" secondAttribute="bottom" constant="13" id="rCT-I5-EYb"/>
+                            <constraint firstItem="AUb-bX-woB" firstAttribute="top" secondItem="iQG-5O-V6c" secondAttribute="bottom" constant="17" id="sNj-q3-97Y"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="bodyTextView" destination="yC7-ax-BSK" id="6pZ-bf-pkq"/>
+                        <outlet property="emailAddressLabel" destination="KVf-Ht-PQI" id="IOL-bC-mx5"/>
+                        <outlet property="mailVCTitle" destination="6VB-Xh-j88" id="PUh-Xi-9ku"/>
+                        <outlet property="titleLabel" destination="LoL-V2-NdL" id="hOg-cw-tQZ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8du-Y3-uWd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3958" y="275"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="8Xl-pp-GDL">

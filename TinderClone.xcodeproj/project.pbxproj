@@ -32,6 +32,7 @@
 		A73909311A8DC50A00DB0EB1 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A73909301A8DC50A00DB0EB1 /* StoreKit.framework */; };
 		A73909331A8DC51400DB0EB1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A73909321A8DC51400DB0EB1 /* SystemConfiguration.framework */; };
 		A739093B1A8DCF3E00DB0EB1 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A739093A1A8DCF3E00DB0EB1 /* libsqlite3.dylib */; };
+		A7470E391A9DA59D002B4829 /* ContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7470E381A9DA59D002B4829 /* ContactsTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,7 @@
 		A73909321A8DC51400DB0EB1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		A73909391A8DCD1D00DB0EB1 /* TinderClone-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TinderClone-Bridging-Header.h"; sourceTree = "<group>"; };
 		A739093A1A8DCF3E00DB0EB1 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		A7470E381A9DA59D002B4829 /* ContactsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +153,7 @@
 				A73908F41A8DBFBA00DB0EB1 /* ViewController.swift */,
 				A7388C751A92C78700B5FB16 /* SignUpViewController.swift */,
 				A7388C771A9318D300B5FB16 /* TinderViewController.swift */,
+				A7470E381A9DA59D002B4829 /* ContactsTableViewController.swift */,
 				A73908F61A8DBFBA00DB0EB1 /* Main.storyboard */,
 				A7388C731A92B75D00B5FB16 /* facebookLogin.png */,
 				A73829471A945E690036320D /* femalePlaceHolder.jpeg */,
@@ -290,6 +293,7 @@
 			files = (
 				A7388C761A92C78700B5FB16 /* SignUpViewController.swift in Sources */,
 				A73908F51A8DBFBA00DB0EB1 /* ViewController.swift in Sources */,
+				A7470E391A9DA59D002B4829 /* ContactsTableViewController.swift in Sources */,
 				A7388C781A9318D300B5FB16 /* TinderViewController.swift in Sources */,
 				A73908F31A8DBFBA00DB0EB1 /* AppDelegate.swift in Sources */,
 			);

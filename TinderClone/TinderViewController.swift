@@ -278,7 +278,8 @@ class TinderViewController: UIViewController {
     func showAlertWithText(header:String = "Warning", message:String) {
         var alert = UIAlertController(title: header, message: message, preferredStyle: UIAlertControllerStyle.Alert)
         var action = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (action:UIAlertAction!) -> Void in
-            // To do
+            // Dismiss current VC and back to previous one
+            self.dismissViewControllerAnimated(true, completion: nil)
         }
         alert.addAction(action)
         self.presentViewController(alert, animated: true, completion:nil)

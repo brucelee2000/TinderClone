@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="hWT-x0-pBj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="VAf-Wr-6hZ">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -117,6 +117,12 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="e87-Vw-AJG">
+                                <rect key="frame" x="26" y="87" width="548" height="300"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="TQS-ed-nUY"/>
+                                </constraints>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q0G-nB-qmD">
                                 <rect key="frame" x="273" y="513" width="55" height="30"/>
                                 <state key="normal" title="Sign Up">
@@ -124,14 +130,9 @@
                                 </state>
                                 <connections>
                                     <action selector="signUpButtonPressed:" destination="rQy-bc-dca" eventType="touchUpInside" id="38g-0K-q2S"/>
+                                    <segue destination="VAf-Wr-6hZ" kind="show" id="pfy-s9-cEA"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="e87-Vw-AJG">
-                                <rect key="frame" x="26" y="87" width="548" height="300"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="300" id="TQS-ed-nUY"/>
-                                </constraints>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -174,7 +175,7 @@
             </objects>
             <point key="canvasLocation" x="1281" y="275"/>
         </scene>
-        <!--Tinder View Controller-->
+        <!--Tinder-->
         <scene sceneID="hyq-qX-ypN">
             <objects>
                 <viewController id="hWT-x0-pBj" customClass="TinderViewController" customModule="TinderClone" customModuleProvider="target" sceneMemberID="viewController">
@@ -187,10 +188,61 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Tinder" id="hf0-du-xU2">
+                        <barButtonItem key="rightBarButtonItem" title="Contacts" id="7XJ-t3-Lei">
+                            <connections>
+                                <segue destination="Ulb-Yh-qFs" kind="show" id="Or2-qL-hvz"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jVq-2A-WKd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1281" y="963"/>
+            <point key="canvasLocation" x="2602" y="275"/>
+        </scene>
+        <!--Contacts Table View Controller-->
+        <scene sceneID="DVL-Ub-ziS">
+            <objects>
+                <tableViewController id="Ulb-Yh-qFs" customClass="ContactsTableViewController" customModule="TinderClone" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="X1Z-y4-YLe">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="myCell" id="L93-ub-PRj">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="L93-ub-PRj" id="xl9-yc-aS9">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Ulb-Yh-qFs" id="w4M-Ag-FIk"/>
+                            <outlet property="delegate" destination="Ulb-Yh-qFs" id="jQ3-lg-3Mp"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YWQ-UG-1ek" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3271" y="275"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="8Xl-pp-GDL">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="VAf-Wr-6hZ" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ua4-Wb-NzS">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="hWT-x0-pBj" kind="relationship" relationship="rootViewController" id="ged-Af-BjV"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WWj-yd-ywV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1966" y="275"/>
         </scene>
     </scenes>
     <resources>

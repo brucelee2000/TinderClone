@@ -406,6 +406,18 @@ Send an Email
           
           // Tells the delegate that the user wants to dismiss the mail composition view.
           func mailComposeController(controller: MFMailComposeViewController!, didFinishWithResult result: MFMailComposeResult, error: NSError!) {
-              dismissViewControllerAnimated(true, completion: nil)
-          } 
+              switch result.value {
+              case MFMailComposeResultCancelled.value:
+                  println("Mail cancelled")
+              case MFMailComposeResultSaved.value:
+                  println("Mail saved")
+              case MFMailComposeResultSent.value:
+                  println("Mail sent")
+              case MFMailComposeResultFailed.value:
+                  println("Mail sent failure: \(error.localizedDescription)")
+              default:
+                  break
+              }
+              self.dismissViewControllerAnimated(true, completion: nil)
+          }
   

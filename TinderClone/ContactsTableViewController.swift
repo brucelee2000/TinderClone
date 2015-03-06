@@ -14,6 +14,7 @@ class ContactsTableViewController: UITableViewController {
     var emailsforContacts:[String] = []
     var namesforContacts:[String] = []
     
+    // Record whose detail disclosure got tapped
     var indexPathForTapped:NSIndexPath?
 
     override func viewDidLoad() {

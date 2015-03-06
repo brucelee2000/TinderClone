@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="VAf-Wr-6hZ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -17,19 +17,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x6C-Lu-hyA">
-                                <rect key="frame" x="156" y="270" width="288" height="61"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="288" id="pTM-oy-Dzm"/>
-                                    <constraint firstAttribute="height" constant="61" id="qyQ-Zg-Qw3"/>
-                                </constraints>
-                                <state key="normal" image="facebookLogin.png">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="facebookSignInButtonPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="x7G-ip-hn1"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tinder Clone" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dDR-fC-Rdk">
                                 <rect key="frame" x="215" y="28" width="170" height="35"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="29"/>
@@ -42,6 +29,19 @@
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x6C-Lu-hyA">
+                                <rect key="frame" x="156" y="269" width="288" height="61"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="288" id="pTM-oy-Dzm"/>
+                                    <constraint firstAttribute="height" constant="61" id="qyQ-Zg-Qw3"/>
+                                </constraints>
+                                <state key="normal" image="facebookLogin.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="facebookSignInButtonPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="x7G-ip-hn1"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -214,9 +214,6 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="L93-ub-PRj" id="xl9-yc-aS9">
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="Lvj-OU-Cwu" kind="presentation" identifier="sendMail" id="O6D-8V-cOi"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -225,6 +222,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Mutual Interest" id="328-Ab-CGl"/>
+                    <connections>
+                        <segue destination="Lvj-OU-Cwu" kind="presentation" identifier="sendMail" id="c8i-fU-xFq"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YWQ-UG-1ek" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

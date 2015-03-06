@@ -13,6 +13,8 @@ class ContactsTableViewController: UITableViewController {
     var imagesforContacts:[NSData] = []
     var emailsforContacts:[String] = []
     var namesforContacts:[String] = []
+    
+    var indexPathForTapped:NSIndexPath?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,7 +72,7 @@ class ContactsTableViewController: UITableViewController {
         // Configure the cell...
         cell.textLabel?.text = namesforContacts[indexPath.row]
         cell.imageView?.image = UIImage(data: imagesforContacts[indexPath.row])
-        cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        cell.accessoryType = UITableViewCellAccessoryType.DetailDisclosureButton
 
         return cell
     }
@@ -121,7 +123,8 @@ class ContactsTableViewController: UITableViewController {
         
         if segue.identifier == "sendMail" {
             let mailVC = segue.destinationViewController as MailViewController
-            let indexPath = self.tableView.indexPathForSelectedRow()
+            //let indexPath = self.tableView.indexPathForSelectedRow()
+            let indexPath = indexPathForTapped
             mailVC.name = namesforContacts[indexPath!.row]
             mailVC.email = emailsforContacts[indexPath!.row]
         }
@@ -129,7 +132,7 @@ class ContactsTableViewController: UITableViewController {
     }
 
     
-    /*
+    // Call default email client when selecting cell
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         // Compose Email subject and address
         var subject = "?subject=beautiful!"
@@ -138,6 +141,11 @@ class ContactsTableViewController: UITableViewController {
         // Call default email client to email
         UIApplication.sharedApplication().openURL(url!)
     }
-    */
+    
+    // Call in-app email client when tapping cell detail disclosure
+    override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
+        indexPathForTapped = indexPath
+        performSegueWithIdentifier("sendMail", sender: self)
+    }
 
 }

@@ -133,26 +133,279 @@ Facebook - Access profile information
 
 * **Method 2: From Facebook API**
 
-    2a. Call method *startForMeWithCompletionHandler*
+    * Call method *startForMeWithCompletionHandler*
 
-        // Method 1. Call "startForMeWithCompletionHandler"
-        FBRequestConnection.startForMeWithCompletionHandler { (connection:FBRequestConnection!, result:AnyObject!, error:NSError!) -> Void in
-            println(result)
-        }
+            // Method 1. Call "startForMeWithCompletionHandler"
+            FBRequestConnection.startForMeWithCompletionHandler { (connection:FBRequestConnection!, result:AnyObject!, error:NSError!) -> Void in
+                println(result)
+            }
 
-    2b. Call method *startWithCompletionHandler*
+    * Call method *startWithCompletionHandler*
 
-        // Method 2. Call "startWithCompletionHandler"
-        var userFBRequest = FBRequest.requestForMe()
+            // Method 2. Call "startWithCompletionHandler"
+            var userFBRequest = FBRequest.requestForMe()
+            
+            // Simple method to make a graph API request for user info (/me).
+            userFBRequest.startWithCompletionHandler { (connection:FBRequestConnection!, result:AnyObject!, error:NSError!) -> Void in
+                // Save profile information onto Parse
+                self.user["gender"] = result["gender"]
+                self.user["name"] = result["name"]
+                self.user["email"] = result["email"]
+                self.user.save()
+            }
+
+Parse - Push Notication
+-----------------------
+* **Step 1. Push notification setup in AppDelegate**
+
+        // Push notification setup
+        // - Step1. Create alert type notification
+        var pushSettings:UIUserNotificationSettings = UIUserNotificationSettings(forTypes: .Alert, categories: nil)
         
-        // Simple method to make a graph API request for user info (/me).
-        userFBRequest.startWithCompletionHandler { (connection:FBRequestConnection!, result:AnyObject!, error:NSError!) -> Void in
-            // Save profile information onto Parse
-            self.user["gender"] = result["gender"]
-            self.user["name"] = result["name"]
-            self.user["email"] = result["email"]
-            self.user.save()
+        // - Step2. Registers your preferred options for notifying the user
+        application.registerUserNotificationSettings(pushSettings)
+        
+        // - Step3. Register to receive push notifications via Apple Push Service.
+        application.registerForRemoteNotifications()
+
+* **Step 2. Configure Push notication related funactions in AppDelegate**
+
+        // +-- Push Notification Related Functions --+
+        // +-----------------------------------------+
+        
+        // Tells the delegate that the app successfully registered with Apple Push Service (APS)
+        func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+            println("Success registered Push Notification")
+        }
+    
+        // Sent to the delegate when Apple Push Service cannot successfully complete the registration process.
+        func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+            println("Failed to register Push Notification")
+        }
+        
+* **Step 3. Send push notification via Parse**
+
+        // Send push notifcation via Parse
+        var push = PFPush()
+        push.setMessage("This is a test for push notification via Parse")
+        push.sendPushInBackgroundWithBlock { (isSuccessful:Bool, error:NSError!) -> Void in
+            println(isSuccessful)
+        }
+        
+Parse - Update user location
+----------------------------
+        // Do any additional setup after loading the view.
+        var user = PFUser.currentUser()
+        
+        // Update user location with Parse
+        PFGeoPoint.geoPointForCurrentLocationInBackground { (myGeopoint:PFGeoPoint!, error:NSError!) -> Void in
+            if error != nil  {
+                println(error)
+            } else {
+                println(myGeopoint)
+                user["location"] = myGeopoint
+                
+                // Create a query for places
+                var query = PFUser.query()
+                // Interested in locations near user
+                query.whereKey("location", nearGeoPoint: myGeopoint)
+                // Limit what could be lots of points
+                query.limit = 10
+                
+                // Final list of objects
+                query.findObjectsInBackgroundWithBlock({ (usersFound:[AnyObject]!, error:NSError!) -> Void in
+                    for user in usersFound {
+                        println(user.username)
+                        self.userNamesList.append(user.username)
+                        self.userImagesList.append(user["image"] as NSData)
+                    }
+                })
+                
+                user.saveInBackgroundWithBlock(nil)         // user.save() takes too much time in realtime
+            }
         }
 
-    
+Drag an Element
+---------------
+* **Step 1. Add the element manually into VC**
 
+        // Add customized element manully
+        let screenCenterX = self.view.bounds.width / 2
+        let screenCenterY = self.view.bounds.height / 2
+        
+        var userImageView:UIImageView = UIImageView(frame: CGRectMake(0, 0, self.view.frame.width, self.view.frame.height))
+        userImageView.image = UIImage(named: "femalePlaceHolder.jpeg")
+        userImageView.contentMode = UIViewContentMode.ScaleAspectFit
+        
+        self.view.addSubview(userImageView)
+        
+* **Step 2. Add action selector to the guesture**
+
+        // Add action selector to guesture
+        var gesture = UIPanGestureRecognizer(target: self, action: Selector("wasDragged:"))
+
+* **Step 3. Add guesture to the element and enable its interaction**
+
+        // Add guesture to customized element
+        userImageView.addGestureRecognizer(gesture)
+        
+        // Enable user interaction for customized element
+        userImageView.userInteractionEnabled = true
+
+* **Step 4. Add details for action selector**
+
+        func wasDragged(guesture:UIPanGestureRecognizer) {
+            // The translation of the pan gesture in the coordinate system of the specified view.
+            let translation = guesture.translationInView(self.view)
+            // Obtain the element inside the dragging item
+            var label = guesture.view!
+            
+            xFromCenter += translation.x
+            var scaleNumber = min(70 / abs(xFromCenter), 1)
+            
+            // --- Animation for the draggging element ---
+            // Set the new coordinate of the dragged element
+            label.center = CGPoint(x: label.center.x + translation.x, y: label.center.y + translation.y)
+            // Reset translation for next movement
+            guesture.setTranslation(CGPointZero, inView: self.view)
+            
+            // Check if the dragged element is out of defined boundary
+            if label.center.x < 100 {
+                println("dragged into not chosen area")
+            } else if label.center.x > (self.view.bounds.width - 100) {
+                println("dragger into chosen area")
+            }
+            
+            ...
+            
+            // Check the guesture status - Reset the element if dragging is over
+            if guesture.state == UIGestureRecognizerState.Ended {
+                xFromCenter = 0
+                
+                // Remove the old ImageView
+                label.removeFromSuperview()
+                
+                // Add the new ImageView
+                var userImageView:UIImageView = UIImageView(frame: CGRectMake(0, 0, self.view.frame.width, self.view.frame.height))
+                userImageView.image = UIImage(named: "femalePlaceHolder.jpeg")
+                userImageView.contentMode = UIViewContentMode.ScaleAspectFit
+                
+                self.view.addSubview(userImageView)
+                
+                // --- Drag an element ---
+                // Add guesture for dragging
+                var gesture = UIPanGestureRecognizer(target: self, action: Selector("wasDragged:"))
+                // Add guesture to customized element
+                userImageView.addGestureRecognizer(gesture)
+                // Enable user interaction for customized element
+                userImageView.userInteractionEnabled = true
+                
+                ...
+                
+                
+            }
+        }
+    
+    }
+
+Rotate/Scale an Element
+-----------------------
+* **Step 0. Configure initial rotation for the element**
+
+        // --- Rotate an element ---
+        // Create an affine transformation matrix constructed from a rotation (radians) value you provide.
+        var rotation:CGAffineTransform = CGAffineTransformMakeRotation(0)
+        
+        // Apply rotation transform to the element
+        userImageView.transform = rotation
+        
+* **Step 1. Change the ratation and scaling for the element**
+
+        // --- Animation for the rotating element ---
+        // Create an affine transformation matrix constructed from a rotation (radians) value you provide.
+        // - similarly, CGAffineTransformRotate(t: CGAffineTransform, angle: CGFloat)
+        var rotation:CGAffineTransform = CGAffineTransformMakeRotation(xFromCenter / (self.view.bounds.width / 2))
+        
+        // Apply rotation transform to the element
+        label.transform = rotation
+
+        // --- Animation for scaling an element ---
+        // Create an affine transformation matrix constructed by scaling an existing affine transform.
+        var scaling:CGAffineTransform = CGAffineTransformScale(rotation, scaleNumber, scaleNumber)
+        
+        // Apply scaling transform to the element
+        label.transform = scaling
+        
+Send an Email
+-------------
+* **Method 1: Call default email client**
+
+        override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+            // Compose Email subject and address
+            var subject = "?subject=beautiful!"
+            var url = NSURL(string: "mailto:" + emailsforContacts[indexPath.row] + subject)
+            println(url!)
+            // Call default email client to email
+            UIApplication.sharedApplication().openURL(url!)
+        }
+
+* **Method 2: Send email in App**
+
+  Use *MFMailComposeViewControllerDelegate* protocol in ViewController
+
+  * **Step 1. Email content configuration**
+
+          func configureMailComposeViewController() -> MFMailComposeViewController {
+              // Setup for configuration
+              let mailComposerVC = MFMailComposeViewController()
+              mailComposerVC.mailComposeDelegate = self
+              
+              // Configuration
+              var emailTitle = titleLabel.text
+              var messageBody = bodyTextView.text
+              //var toRecipts = ["ros4net@gmail.com"]
+              var toRecipts = [email]
+              mailComposerVC.setToRecipients(toRecipts)
+              mailComposerVC.setSubject(emailTitle)
+              mailComposerVC.setMessageBody(messageBody, isHTML: false)
+              
+              return mailComposerVC
+          } 
+          
+  * **Step 2. Configure Email sending status**
+
+          func showSendMailErrorAlert() {
+              let sendMailErrorAlert = UIAlertView(title: "Could Not Send Email", message: "Your device could not send e-mail. Please check your configuration and try again", delegate: self, cancelButtonTitle: "OK")
+              sendMailErrorAlert.show()
+          }
+
+  * **Step 3. Add send/cancell action**
+
+          @IBAction func cancellButtonPressed(sender: UIBarButtonItem) {
+              self.dismissViewControllerAnimated(true, completion: nil)
+          }
+          
+          
+          @IBAction func sendEmailButtonPressed(sender: UIBarButtonItem) {
+              let mailComposerVC = configureMailComposeViewController()
+              
+              // Check if the user has set up the device for sending email.
+              if MFMailComposeViewController.canSendMail() {
+                  self.presentViewController(mailComposerVC, animated: true, completion: { () -> Void in
+                      println("Sent successfully!")
+                  })
+              } else {
+                  self.showSendMailErrorAlert()
+              }
+          }
+          
+  * **Step 4. Configure the action after email is sent**
+
+          // +--- Method for MFMailComposeViewControllerDelegate ---+
+          // +---------------------------------------------------------------+
+          
+          // Tells the delegate that the user wants to dismiss the mail composition view.
+          func mailComposeController(controller: MFMailComposeViewController!, didFinishWithResult result: MFMailComposeResult, error: NSError!) {
+              dismissViewControllerAnimated(true, completion: nil)
+          } 
+  
